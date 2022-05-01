@@ -1,5 +1,7 @@
 package data_structure.tree.bst;
 
+import data_structure.line.stack.ArrayStack;
+import data_structure.line.stack.Stack;
 import data_structure.tree.Tree;
 
 import java.util.Iterator;
@@ -45,20 +47,22 @@ class BSTNode<E extends Comparable<E>> {
     }
 
     static <E extends Comparable<E>> BSTNode<E> delete(BSTNode<E> root, E elem) {
-        int k=elem.compareTo(root.value);
-        if (k > 0) {
-            root.right = delete(root.right, root.value);
-        } else if (k < 0) {
-            root.left = delete(root.left, root.value);
-        }else {
-            if (root.isLeaf()){
-                return null;
-            } else if (root.right!=null){
-                root.value = min(root.right);
-                root.right = delete(root.right, root.value);
+        if (root!=null){
+            int k=elem.compareTo(root.value);
+            if (k > 0) {
+                root.right = delete(root.right, elem);
+            } else if (k < 0) {
+                root.left = delete(root.left, elem);
             }else {
-                root.value = max(root.left);
-                root.left = delete(root.left, root.value);
+                if (root.isLeaf()){
+                    return null;
+                } else if (root.right!=null){
+                    root.value = min(root.right);
+                    root.right = delete(root.right, root.value);
+                }else {
+                    root.value = max(root.left);
+                    root.left = delete(root.left, root.value);
+                }
             }
         }
         return root;
@@ -91,6 +95,37 @@ class BSTNode<E extends Comparable<E>> {
         }
     }
 
+}
+
+class BstIterator<E extends Comparable<E>> implements Iterator<E>{
+    Stack<BSTNode<E>> stack;
+
+    public BstIterator(BSTNode<E> root) {
+        this.stack=new ArrayStack<>();
+        while (root!=null){
+            stack.push(root);
+            root=root.left;
+        }
+    }
+
+    @Override
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    @Override
+    public E next() {
+        if (stack.isEmpty()){
+            return null;
+        }
+        BSTNode<E> node=stack.pop();
+        BSTNode<E> root=node.right;
+        while (root!=null){
+            stack.push(root);
+            root=root.left;
+        }
+        return node.value;
+    }
 }
 
 public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
@@ -141,6 +176,20 @@ public class BinarySearchTree<E extends Comparable<E>> implements Tree<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new BstIterator<>(this.root);
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree<Integer> bst=new BinarySearchTree<>();
+        bst.insert(15);
+        bst.insert(25);
+        bst.insert(35);
+        bst.insert(10);
+        bst.insert(5);
+        bst.insert(13);
+        bst.insert(33);
+        for (int i:bst){
+            System.out.println(i);
+        }
     }
 }
