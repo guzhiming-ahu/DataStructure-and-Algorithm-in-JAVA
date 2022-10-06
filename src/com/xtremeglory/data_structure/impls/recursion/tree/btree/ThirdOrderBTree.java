@@ -1,6 +1,6 @@
-package data_structure.tree.btree;
+package com.xtremeglory.data_structure.impls.recursion.tree.btree;
 
-import data_structure.tree.Tree;
+import com.xtremeglory.data_structure.impls.recursion.tree.Tree;
 
 import java.util.Iterator;
 

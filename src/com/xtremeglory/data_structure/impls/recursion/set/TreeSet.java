@@ -1,8 +1,8 @@
-package data_structure.set;
+package com.xtremeglory.data_structure.impls.recursion.set;
 
-import data_structure.tree.bst.BinarySearchTree;
-import data_structure.tree.btree.ThirdOrderBTree;
-import data_structure.tree.Tree;
+import com.xtremeglory.data_structure.impls.recursion.tree.bst.BinarySearchTree;
+import com.xtremeglory.data_structure.impls.recursion.tree.btree.ThirdOrderBTree;
+import com.xtremeglory.data_structure.impls.recursion.tree.Tree;
 
 import java.util.Iterator;
 

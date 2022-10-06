@@ -1,4 +1,4 @@
-package data_structure.line.stack;
+package com.xtremeglory.data_structure;
 
 public interface Stack<T> {
 

@@ -1,7 +1,7 @@
-package data_structure.map;
+package com.xtremeglory.data_structure.impls.recursion.map;
 
-import data_structure.set.Set;
-import data_structure.set.TreeSet;
+import com.xtremeglory.data_structure.impls.recursion.set.Set;
+import com.xtremeglory.data_structure.impls.recursion.set.TreeSet;
 
 class KVNode<K extends Comparable<K>,V> implements Comparable<KVNode<K,V>>{
     K key;

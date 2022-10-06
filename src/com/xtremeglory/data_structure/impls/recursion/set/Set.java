@@ -1,4 +1,4 @@
-package data_structure.set;
+package com.xtremeglory.data_structure.impls.recursion.set;
 
 public interface Set<E> extends Iterable<E>{
     void add(E elem);

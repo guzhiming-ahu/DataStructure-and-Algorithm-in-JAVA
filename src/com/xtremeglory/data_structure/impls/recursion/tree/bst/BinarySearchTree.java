@@ -1,8 +1,8 @@
-package data_structure.tree.bst;
+package com.xtremeglory.data_structure.impls.recursion.tree.bst;
 
-import data_structure.line.stack.ArrayStack;
-import data_structure.line.stack.Stack;
-import data_structure.tree.Tree;
+import com.xtremeglory.data_structure.impls.iteration.list.ArrayStack;
+import com.xtremeglory.data_structure.Stack;
+import com.xtremeglory.data_structure.impls.recursion.tree.Tree;
 
 import java.util.Iterator;
 

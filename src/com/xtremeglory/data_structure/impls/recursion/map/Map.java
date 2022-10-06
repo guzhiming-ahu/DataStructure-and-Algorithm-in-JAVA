@@ -1,6 +1,6 @@
-package data_structure.map;
+package com.xtremeglory.data_structure.impls.recursion.map;
 
-import data_structure.set.Set;
+import com.xtremeglory.data_structure.impls.recursion.set.Set;
 
 public interface Map<K,V> {
     void put(K key,V value);

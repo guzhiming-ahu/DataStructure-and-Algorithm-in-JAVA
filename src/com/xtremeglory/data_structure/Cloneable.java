@@ -1,4 +1,4 @@
-package data_structure;
+package com.xtremeglory.data_structure;
 
 import java.io.*;
 

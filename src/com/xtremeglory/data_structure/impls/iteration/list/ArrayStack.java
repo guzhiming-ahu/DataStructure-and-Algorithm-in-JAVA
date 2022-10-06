@@ -1,9 +1,7 @@
-package data_structure.line.stack;
+package com.xtremeglory.data_structure.impls.iteration.list;
 
-import data_structure.line.list.ArrayList;
-import data_structure.line.list.List;
-
-import java.util.EmptyStackException;
+import com.xtremeglory.data_structure.List;
+import com.xtremeglory.data_structure.Stack;
 
 public class ArrayStack<T> implements Stack<T> {
     private final List<T> stack;
@@ -32,7 +30,7 @@ public class ArrayStack<T> implements Stack<T> {
         if (!isEmpty()) {
             return stack.getLast();
         } else {
-            throw new EmptyStackException();
+            return null;
         }
     }
 
@@ -41,7 +39,7 @@ public class ArrayStack<T> implements Stack<T> {
         if (!isEmpty()) {
             return stack.removeLast();
         }else {
-            throw new EmptyStackException();
+            return null;
         }
     }
 }
