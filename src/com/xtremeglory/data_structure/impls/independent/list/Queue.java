@@ -5,22 +5,21 @@ import com.xtremeglory.data_structure.impls.independent.UnknownStorageStructureE
 import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
 import com.xtremeglory.data_structure.impls.recursion.list.LinkedList;
 
+public class Queue<E> {
+    private final List<E> queue;
 
-public class Stack<E> {
-    private final List<E> stack;
-
-    public Stack(ListStorageStructure structure) throws UnknownStorageStructureException {
+    public Queue(ListStorageStructure structure) throws UnknownStorageStructureException {
         if (structure.equals(ListStorageStructure.ARRAY)) {
-            this.stack = new ArrayList<>();
+            this.queue = new ArrayList<>();
         } else if (structure.equals(ListStorageStructure.LINKED)) {
-            this.stack = new LinkedList<>();
+            this.queue = new LinkedList<>();
         } else {
             throw new UnknownStorageStructureException();
         }
     }
 
-    public Stack() {
-        this.stack = new ArrayList<>();
+    public Queue(){
+        this.queue=new ArrayList<>();
     }
 
     /**
@@ -29,7 +28,7 @@ public class Stack<E> {
      * @return 是否为空栈
      */
     public boolean isEmpty() {
-        return this.stack.isEmpty();
+        return this.queue.isEmpty();
     }
 
     /**
@@ -38,50 +37,51 @@ public class Stack<E> {
      * @return 元素数量
      */
     public int size() {
-        return this.stack.size();
+        return this.queue.size();
+    }
+
+
+    /**
+     * 入队
+     *
+     * @param elem 入队元素
+     */
+    public void enqueue(E elem) {
+        this.queue.insertLast(elem);
     }
 
     /**
-     * 入栈
+     * 入队
      *
-     * @param elem 入栈元素
+     * @param elem 入队元素
      */
-    public void push(E elem) {
-        this.stack.insertLast(elem);
-    }
-
-    /**
-     * 入栈
-     *
-     * @param elem 入栈元素
-     */
-    public void pushIfNotNull(E elem) {
+    public void enqueueIfNotNull(E elem) {
         if (elem != null) {
-            this.push(elem);
+            this.enqueue(elem);
         }
     }
 
     /**
-     * 获取栈顶元素,而不弹出
+     * 获取队首元素,而不弹出
      *
-     * @return 栈顶元素
+     * @return 队首元素
      */
-    public E top() {
+    public E front() {
         if (!isEmpty()) {
-            return this.stack.getLast();
+            return this.queue.getFirst();
         } else {
             return null;
         }
     }
 
     /**
-     * 弹出栈顶元素
+     * 弹出队首元素
      *
-     * @return 栈顶元素
+     * @return 队首元素
      */
     public E pop() {
         if (!isEmpty()) {
-            return this.stack.removeLast();
+            return this.queue.removeFirst();
         } else {
             return null;
         }
