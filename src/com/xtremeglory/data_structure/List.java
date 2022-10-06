@@ -9,6 +9,7 @@ public interface List<E> extends Iterable<E> {
     /**
      * 使线性表更加紧凑，节省内存
      * 对于不支持紧凑的数据结构， 将返回false
+     *
      * @return 是否执行此操作
      */
     boolean compact();
