@@ -2,6 +2,8 @@ package com.xtremeglory.data_structure.impls.recursion.list;
 
 import com.xtremeglory.data_structure.List;
 
+import java.util.Iterator;
+
 final class Node<E> {
     E elem;
     Node<E> next;
@@ -40,8 +42,9 @@ final class Node<E> {
         if (this.next == null) {
             return null;
         } else if (index == 0) {
+            E elem = this.next.elem;
             this.next = this.next.next;
-            return this.next.elem;
+            return elem;
         } else {
             return this.next.remove(index - 1);
         }
@@ -65,11 +68,11 @@ final class Node<E> {
         }
     }
 
-    public int indexOf(int index,E e) {
+    public int indexOf(int index, E e) {
         if (e.equals(this.elem)) {
             return index;
         } else if (this.next != null) {
-            return this.next.indexOf(index + 1,e);
+            return this.next.indexOf(index + 1, e);
         } else {
             return -1;
         }
@@ -80,6 +83,26 @@ public class LinkedList<E> implements List<E> {
     private int size;
     //非空头结点
     private final Node<E> head;
+
+    private static final class LinkedListIterator<E> implements Iterator<E> {
+        private Node<E> currentPosition;
+
+        public LinkedListIterator(Node<E> currentPosition) {
+            this.currentPosition = currentPosition;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentPosition != null;
+        }
+
+        @Override
+        public E next() {
+            E elem = currentPosition.elem;
+            currentPosition = currentPosition.next;
+            return elem;
+        }
+    }
 
     public LinkedList() {
         this.size = 0;
@@ -133,6 +156,11 @@ public class LinkedList<E> implements List<E> {
     }
 
     @Override
+    public void removeAll(int index) {
+        this.head.next = null;
+    }
+
+    @Override
     public E removeFirst() {
         return this.remove(0);
     }
@@ -159,14 +187,19 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public E getLast() {
-        return this.get(this.size-1);
+        return this.get(this.size - 1);
     }
 
     @Override
     public int indexOf(E e) {
-        if (e!=null){
-            return this.head.indexOf(0,e);
+        if (e != null) {
+            return this.head.indexOf(0, e);
         }
         return -1;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new LinkedListIterator<>(this.head.next);
     }
 }

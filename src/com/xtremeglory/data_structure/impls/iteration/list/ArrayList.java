@@ -2,6 +2,8 @@ package com.xtremeglory.data_structure.impls.iteration.list;
 
 import com.xtremeglory.data_structure.List;
 
+import java.util.Iterator;
+
 public class ArrayList<E> implements List<E> {
     private Object[] array;
     private int capacity;
@@ -9,6 +11,26 @@ public class ArrayList<E> implements List<E> {
 
     private static final int DEFAULT_CAPACITY = 100;
     private static final int DEFAULT_INC_SIZE = 20;
+
+    private static final class ArrayListIterator<E> implements Iterator<E> {
+        private int index;
+        private final ArrayList<E> list;
+
+        public ArrayListIterator(ArrayList<E> list) {
+            this.index = 0;
+            this.list = list;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return 0 <= this.index && this.index < this.list.size;
+        }
+
+        @Override
+        public E next() {
+            return this.list.get(index++);
+        }
+    }
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
@@ -46,17 +68,18 @@ public class ArrayList<E> implements List<E> {
     @Override
     @SuppressWarnings("unchecked")
     public E remove(int index) {
-        if (index < 0 && index >= this.size) {
+        if (index < 0 || index >= this.size) {
             return null;
         }
         E elem = (E) this.array[index];
-        if (index == 0) {
-            this.array[0] = null;
-        } else {
-            System.arraycopy(this.array, index, this.array, index - 1, this.size - index - 1);
-        }
+        System.arraycopy(this.array, index + 1, this.array, index, this.size - index - 1);
         this.size--;
         return elem;
+    }
+
+    @Override
+    public void removeAll(int index) {
+        this.size = 0;
     }
 
     @Override
@@ -102,7 +125,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public int indexOf(E e) {
-        if (e!=null){
+        if (e != null) {
             for (int i = 0; i < this.size; ++i) {
                 if (e.equals(this.array[i])) {
                     return i;
@@ -130,6 +153,11 @@ public class ArrayList<E> implements List<E> {
         Object[] new_array = new Object[this.capacity + DEFAULT_INC_SIZE];
         System.arraycopy(this.array, 0, new_array, 0, this.size);
         this.array = new_array;
-        this.capacity += DEFAULT_CAPACITY;
+        this.capacity += DEFAULT_INC_SIZE;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new ArrayListIterator<>(this);
     }
 }

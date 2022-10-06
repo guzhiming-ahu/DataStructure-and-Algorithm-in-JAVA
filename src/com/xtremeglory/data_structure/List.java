@@ -1,6 +1,6 @@
 package com.xtremeglory.data_structure;
 
-public interface List<E> {
+public interface List<E> extends Iterable<E> {
     //底层接口
     int size();
 
@@ -21,6 +21,8 @@ public interface List<E> {
     void insertLast(E e);
 
     E remove(int index);
+
+    void removeAll(int index);
 
     E removeFirst();
 
