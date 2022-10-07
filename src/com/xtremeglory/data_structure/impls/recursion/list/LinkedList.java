@@ -156,8 +156,9 @@ public class LinkedList<E> implements List<E> {
     }
 
     @Override
-    public void removeAll(int index) {
+    public void removeAll() {
         this.head.next = null;
+        this.size = 0;
     }
 
     @Override

@@ -2,10 +2,11 @@ package com.xtremeglory.data_structure.list;
 
 import com.xtremeglory.data_structure.List;
 import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
+import com.xtremeglory.data_structure.impls.iteration.list.StaticLinkedList;
 import com.xtremeglory.data_structure.impls.recursion.list.LinkedList;
 
 public class ListTest {
-    public static List<Integer> list = new ArrayList<>();
+    public static List<Integer> list = new StaticLinkedList<>();
 
 
     public static void main(String[] args) {
@@ -20,6 +21,19 @@ public class ListTest {
 
         insertTest1();
         removeTest2();
+
+        insertTest2();
+        removeTest();
+
+        insertTest2();
+        removeTest1();
+
+        insertTest2();
+        removeTest3();
+
+        insertTest2();
+        removeTest2();
+
     }
 
     public static void insertTest() {
@@ -36,6 +50,13 @@ public class ListTest {
         printTest("insertTest1");
     }
 
+    public static void insertTest2() {
+        for (int i = 0; i < 30; i++) {
+            list.insertFirst(i);
+        }
+        printTest("insertTest2");
+    }
+
     public static void printTest(String func) {
         System.out.println("######" + func + "#######");
         for (int i : list) {
@@ -49,6 +70,8 @@ public class ListTest {
         for (int i = 0; i < len; ++i) {
             list.removeLast();
         }
+        assert list.size() == 0;
+        assert list.isEmpty();
         printTest("removeTest");
     }
 
@@ -58,6 +81,8 @@ public class ListTest {
         for (int i = 0; i < len; ++i) {
             list.removeFirst();
         }
+        assert list.size() == 0;
+        assert list.isEmpty();
         printTest("removeTest1");
     }
 
@@ -72,5 +97,14 @@ public class ListTest {
             }
         }
         printTest("removeTest2");
+        list.removeAll();
+    }
+
+    //删除所有余3位置的元素
+    public static void removeTest3() {
+        list.removeAll();
+        assert list.size() == 0;
+        assert list.isEmpty();
+        printTest("removeTest3");
     }
 }

@@ -23,7 +23,7 @@ public interface List<E> extends Iterable<E> {
 
     E remove(int index);
 
-    void removeAll(int index);
+    void removeAll();
 
     E removeFirst();
 

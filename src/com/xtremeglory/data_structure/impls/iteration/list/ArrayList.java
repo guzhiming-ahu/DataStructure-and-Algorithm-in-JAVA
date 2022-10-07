@@ -78,7 +78,7 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public void removeAll(int index) {
+    public void removeAll() {
         this.size = 0;
     }
 
