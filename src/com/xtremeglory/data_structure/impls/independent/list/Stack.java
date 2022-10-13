@@ -1,22 +1,14 @@
 package com.xtremeglory.data_structure.impls.independent.list;
 
 import com.xtremeglory.data_structure.List;
-import com.xtremeglory.data_structure.impls.independent.UnknownStorageStructureException;
 import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
-import com.xtremeglory.data_structure.impls.recursion.list.LinkedList;
 
 
 public class Stack<E> {
     private final List<E> stack;
 
-    public Stack(ListStorageStructure structure) throws UnknownStorageStructureException {
-        if (structure.equals(ListStorageStructure.ARRAY)) {
-            this.stack = new ArrayList<>();
-        } else if (structure.equals(ListStorageStructure.LINKED)) {
-            this.stack = new LinkedList<>();
-        } else {
-            throw new UnknownStorageStructureException();
-        }
+    public Stack(Class<? extends List> clazz) throws InstantiationException, IllegalAccessException {
+        this.stack = clazz.newInstance();
     }
 
     public Stack() {
