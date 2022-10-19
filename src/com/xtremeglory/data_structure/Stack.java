@@ -1,6 +1,5 @@
-package com.xtremeglory.data_structure.impls.independent.list;
+package com.xtremeglory.data_structure;
 
-import com.xtremeglory.data_structure.List;
 import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
 
 

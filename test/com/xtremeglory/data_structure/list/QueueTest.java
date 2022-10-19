@@ -1,6 +1,6 @@
 package com.xtremeglory.data_structure.list;
 
-import com.xtremeglory.data_structure.impls.independent.list.Queue;
+import com.xtremeglory.data_structure.Queue;
 import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
 
 public class QueueTest {
