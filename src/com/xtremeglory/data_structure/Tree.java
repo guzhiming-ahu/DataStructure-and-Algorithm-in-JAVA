@@ -1,4 +1,4 @@
-package com.xtremeglory.data_structure.impls.recursion.tree;
+package com.xtremeglory.data_structure;
 
 public interface Tree<E extends Comparable<E>> extends Iterable<E>{
     void insert(E elem);

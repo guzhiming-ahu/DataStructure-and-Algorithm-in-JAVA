@@ -1,6 +1,6 @@
-package com.xtremeglory.data_structure.impls.recursion.tree.btree;
+package com.xtremeglory.data_structure.impls.recursion.tree;
 
-import com.xtremeglory.data_structure.impls.recursion.tree.Tree;
+import com.xtremeglory.data_structure.Tree;
 
 import java.util.Iterator;
 
@@ -8,54 +8,54 @@ enum TreeNodePosition {
     LEFT, MIDDLE, RIGHT
 }
 
-abstract class TreeNode<E extends Comparable<E>> {
+abstract class BTreeNode<E extends Comparable<E>> {
     boolean isLeaf() {
         return false;
     }
 
-    TreeNode<E> insert(E elem) {
+    BTreeNode<E> insert(E elem) {
         return this;
     }
 
-    TreeNode<E> upgrade(TreeNode<E> another, TreeNodePosition position) {
-        return this;
-    }
-
-
-    TreeNode<E> split() {
+    BTreeNode<E> upgrade(BTreeNode<E> another, TreeNodePosition position) {
         return this;
     }
 
 
-    TreeNode<E> delete(E elem) {
+    BTreeNode<E> split() {
         return this;
     }
 
-    boolean needRotation(TreeNode<E> brother) {
+
+    BTreeNode<E> delete(E elem) {
+        return this;
+    }
+
+    boolean needRotation(BTreeNode<E> brother) {
         return false;
     }
 
-    boolean needMerge(TreeNode<E> brother) {
+    boolean needMerge(BTreeNode<E> brother) {
         return false;
     }
 
-    TreeNode<E> leftRotation(TreeNode<E> parent, TreeNodePosition position) {
+    BTreeNode<E> leftRotation(BTreeNode<E> parent, TreeNodePosition position) {
         return this;
     }
 
-    TreeNode<E> rightRotation(TreeNode<E> parent) {
+    BTreeNode<E> rightRotation(BTreeNode<E> parent) {
         return this;
     }
 
-    TreeNode<E> downgrade(TreeNodePosition position) {
+    BTreeNode<E> downgrade(TreeNodePosition position) {
         return this;
     }
 
-    TreeNode<E> mergeRight(E excape, NilNode<E> another) {
+    BTreeNode<E> mergeRight(E excape, NilNode<E> another) {
         return this;
     }
 
-    TreeNode<E> mergeLeft(E excape, NilNode<E> another) {
+    BTreeNode<E> mergeLeft(E excape, NilNode<E> another) {
         return this;
     }
 
@@ -81,13 +81,13 @@ abstract class TreeNode<E extends Comparable<E>> {
 
 }
 
-class NilNode<E extends Comparable<E>> extends TreeNode<E> {
-    TreeNode<E> branch;
+class NilNode<E extends Comparable<E>> extends BTreeNode<E> {
+    BTreeNode<E> branch;
 
     public NilNode() {
     }
 
-    public NilNode(TreeNode<E> branch) {
+    public NilNode(BTreeNode<E> branch) {
         this.branch = branch;
     }
 
@@ -97,31 +97,31 @@ class NilNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    boolean needRotation(TreeNode<E> brother) {
+    boolean needRotation(BTreeNode<E> brother) {
         return this.isLeaf() && brother instanceof TripleNode;
     }
 
     @Override
-    boolean needMerge(TreeNode<E> brother) {
+    boolean needMerge(BTreeNode<E> brother) {
         return !this.isLeaf() || brother instanceof DoubleNode;
     }
 
     @Override
-    public TreeNode<E> insert(E elem) {
+    public BTreeNode<E> insert(E elem) {
         return new DoubleNode<>(elem);
     }
 }
 
-class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
+class DoubleNode<E extends Comparable<E>> extends BTreeNode<E> {
     E value;
-    TreeNode<E> left;
-    TreeNode<E> right;
+    BTreeNode<E> left;
+    BTreeNode<E> right;
 
     DoubleNode(E value) {
         this.value = value;
     }
 
-    public DoubleNode(E value, TreeNode<E> left, TreeNode<E> right) {
+    public DoubleNode(E value, BTreeNode<E> left, BTreeNode<E> right) {
         this.value = value;
         this.left = left;
         this.right = right;
@@ -133,7 +133,7 @@ class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> insert(E elem) {
+    public BTreeNode<E> insert(E elem) {
         if (elem.compareTo(value) > 0) {
             if (this.isLeaf()) {
                 return new TripleNode<>(this.value, elem);
@@ -153,17 +153,17 @@ class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> delete(E elem) {
+    public BTreeNode<E> delete(E elem) {
         if (elem.compareTo(this.value) > 0) {
             this.right = this.right.delete(elem);
-            if (this.right.needRotation(this.left)){
+            if (this.right.needRotation(this.left)) {
                 return this.left.rightRotation(this);
-            }else if (this.right.needMerge(this.left)){
+            } else if (this.right.needMerge(this.left)) {
                 return this.downgrade(TreeNodePosition.RIGHT);
             }
         } else if (elem.compareTo(this.value) < 0) {
             this.left = this.left.delete(elem);
-            if (this.left.needRotation(this.right)){
+            if (this.left.needRotation(this.right)) {
                 return this.right.leftRotation(this,TreeNodePosition.LEFT);
             }else if (this.left.needMerge(this.right)){
                 return this.downgrade(TreeNodePosition.LEFT);
@@ -185,7 +185,7 @@ class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    TreeNode<E> downgrade(TreeNodePosition position) {
+    BTreeNode<E> downgrade(TreeNodePosition position) {
         switch (position) {
             case LEFT:
                 return new NilNode<>(this.right.mergeLeft(this.value, (NilNode<E>) this.left));
@@ -196,12 +196,12 @@ class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    TreeNode<E> mergeLeft(E escape, NilNode<E> another) {
+    BTreeNode<E> mergeLeft(E escape, NilNode<E> another) {
         return new TripleNode<>(escape, this.value, another.branch, this.left, this.right);
     }
 
     @Override
-    TreeNode<E> mergeRight(E escape, NilNode<E> another) {
+    BTreeNode<E> mergeRight(E escape, NilNode<E> another) {
         return new TripleNode<>(this.value, escape, this.left, this.right, another.branch);
     }
 
@@ -218,7 +218,7 @@ class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> upgrade(TreeNode<E> another, TreeNodePosition position) {
+    public BTreeNode<E> upgrade(BTreeNode<E> another, TreeNodePosition position) {
         if (another instanceof Quadruple) {
             DoubleNode<E> dnode = (DoubleNode<E>) another.split();
             switch (position) {
@@ -264,19 +264,19 @@ class DoubleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 }
 
-class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
+class TripleNode<E extends Comparable<E>> extends BTreeNode<E> {
     E first;
     E second;
-    TreeNode<E> left;
-    TreeNode<E> middle;
-    TreeNode<E> right;
+    BTreeNode<E> left;
+    BTreeNode<E> middle;
+    BTreeNode<E> right;
 
     public TripleNode(E first, E second) {
         this.first = first;
         this.second = second;
     }
 
-    public TripleNode(E first, E second, TreeNode<E> left, TreeNode<E> middle, TreeNode<E> right) {
+    public TripleNode(E first, E second, BTreeNode<E> left, BTreeNode<E> middle, BTreeNode<E> right) {
         this.first = first;
         this.second = second;
         this.left = left;
@@ -290,7 +290,7 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> insert(E elem) {
+    public BTreeNode<E> insert(E elem) {
         if (elem.compareTo(this.first) < 0) {
             if (this.isLeaf()) {
                 return new Quadruple<>(elem, this.first, this.second);
@@ -317,12 +317,12 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> delete(E elem) {
+    public BTreeNode<E> delete(E elem) {
         if (elem.compareTo(this.first) < 0) {
             this.left = this.left.delete(elem);
-            if (this.left.needRotation(this.middle)){
-                return this.middle.leftRotation(this,TreeNodePosition.LEFT);
-            }else if (this.left.needMerge(this.middle)){
+            if (this.left.needRotation(this.middle)) {
+                return this.middle.leftRotation(this, TreeNodePosition.LEFT);
+            } else if (this.left.needMerge(this.middle)) {
                 return this.downgrade(TreeNodePosition.LEFT);
             }
         } else if (elem.compareTo(this.first) == 0) {
@@ -368,7 +368,7 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    TreeNode<E> leftRotation(TreeNode<E> parent, TreeNodePosition position) {
+    BTreeNode<E> leftRotation(BTreeNode<E> parent, TreeNodePosition position) {
         if (parent instanceof DoubleNode) {
             return new DoubleNode<>(this.first, new DoubleNode<>(((DoubleNode<E>) parent).value), new DoubleNode<>(this.second));
         } else {
@@ -390,10 +390,10 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    TreeNode<E> rightRotation(TreeNode<E> parent) {
-        if (parent instanceof DoubleNode){
-            return new DoubleNode<>(this.second,new DoubleNode<>(this.first),new DoubleNode<>(((DoubleNode<E>) parent).value));
-        }else {
+    BTreeNode<E> rightRotation(BTreeNode<E> parent) {
+        if (parent instanceof DoubleNode) {
+            return new DoubleNode<>(this.second, new DoubleNode<>(this.first), new DoubleNode<>(((DoubleNode<E>) parent).value));
+        } else {
             TripleNode<E> node = (TripleNode<E>) parent;
             node.right = new DoubleNode<>(node.second);
             node.second = this.second;
@@ -403,29 +403,29 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    TreeNode<E> downgrade(TreeNodePosition position) {
+    BTreeNode<E> downgrade(TreeNodePosition position) {
         DoubleNode<E> root;
         switch (position) {
             case LEFT:
                 root = new DoubleNode<>(this.second, this.middle.mergeLeft(this.first, (NilNode<E>) this.left), this.right);
-                return root.upgrade(root.left,TreeNodePosition.LEFT);
+                return root.upgrade(root.left, TreeNodePosition.LEFT);
             case MIDDLE:
                 root = new DoubleNode<>(this.first, this.left, this.right.mergeLeft(this.second, (NilNode<E>) this.middle));
-                return root.upgrade(root.right,TreeNodePosition.RIGHT);
+                return root.upgrade(root.right, TreeNodePosition.RIGHT);
             case RIGHT:
-                root= new DoubleNode<>(this.first, this.left, this.middle.mergeRight(this.second, (NilNode<E>) this.right));
+                root = new DoubleNode<>(this.first, this.left, this.middle.mergeRight(this.second, (NilNode<E>) this.right));
                 return root.upgrade(this.right,TreeNodePosition.RIGHT);
         }
         return this;
     }
 
     @Override
-    TreeNode<E> mergeLeft(E escape, NilNode<E> another) {
+    BTreeNode<E> mergeLeft(E escape, NilNode<E> another) {
         return new Quadruple<>(escape, this.first, this.second, another.branch, this.left, this.middle, this.right);
     }
 
     @Override
-    TreeNode<E> mergeRight(E escape, NilNode<E> another) {
+    BTreeNode<E> mergeRight(E escape, NilNode<E> another) {
         return new Quadruple<>(this.first, this.second, escape, this.left, this.middle, this.right, another.branch);
     }
 
@@ -445,7 +445,7 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> upgrade(TreeNode<E> another, TreeNodePosition position) {
+    public BTreeNode<E> upgrade(BTreeNode<E> another, TreeNodePosition position) {
         if (another instanceof Quadruple) {
             DoubleNode<E> dnode = (DoubleNode<E>) another.split();
             switch (position) {
@@ -493,15 +493,15 @@ class TripleNode<E extends Comparable<E>> extends TreeNode<E> {
     }
 }
 
-class Quadruple<E extends Comparable<E>> extends TreeNode<E> {
+class Quadruple<E extends Comparable<E>> extends BTreeNode<E> {
     E first;
     E second;
     E third;
 
-    TreeNode<E> left;
-    TreeNode<E> middle_left;
-    TreeNode<E> middle_right;
-    TreeNode<E> right;
+    BTreeNode<E> left;
+    BTreeNode<E> middle_left;
+    BTreeNode<E> middle_right;
+    BTreeNode<E> right;
 
     public Quadruple(E first, E second, E third) {
         this.first = first;
@@ -510,7 +510,7 @@ class Quadruple<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     public Quadruple(E first, E second, E third,
-                     TreeNode<E> left, TreeNode<E> middle_left, TreeNode<E> middle_right, TreeNode<E> right) {
+                     BTreeNode<E> left, BTreeNode<E> middle_left, BTreeNode<E> middle_right, BTreeNode<E> right) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -521,7 +521,7 @@ class Quadruple<E extends Comparable<E>> extends TreeNode<E> {
     }
 
     @Override
-    public TreeNode<E> split() {
+    public BTreeNode<E> split() {
         return new DoubleNode<>(this.second,
                 new DoubleNode<>(this.first, this.left, this.middle_left),
                 new DoubleNode<>(this.third, this.middle_right, this.right));
@@ -529,7 +529,7 @@ class Quadruple<E extends Comparable<E>> extends TreeNode<E> {
 }
 
 public class ThirdOrderBTree<E extends Comparable<E>> implements Tree<E> {
-    private TreeNode<E> root;
+    private BTreeNode<E> root;
 
     public ThirdOrderBTree() {
         this.root = new NilNode<>();
