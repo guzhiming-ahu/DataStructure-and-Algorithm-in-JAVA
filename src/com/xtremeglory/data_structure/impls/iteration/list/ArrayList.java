@@ -3,8 +3,9 @@ package com.xtremeglory.data_structure.impls.iteration.list;
 import com.xtremeglory.data_structure.List;
 
 import java.util.Iterator;
+import java.util.RandomAccess;
 
-public class ArrayList<E> implements List<E> {
+public class ArrayList<E> implements List<E>, RandomAccess {
     private Object[] array;
     private int capacity;
     private int size;
