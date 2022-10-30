@@ -1,6 +1,6 @@
 package com.xtremeglory.data_structure;
 
-public interface Tree<E extends Comparable<E>> extends Iterable<E>{
+public interface Tree<E extends Comparable<E>> extends Iterable<E> {
     void insert(E elem);
 
     void delete(E elem);
