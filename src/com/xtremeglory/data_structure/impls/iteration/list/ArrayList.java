@@ -57,12 +57,12 @@ public class ArrayList<E> implements List<E>, RandomAccess {
     }
 
     @Override
-    public void insertFirst(E e) {
+    public void prepend(E e) {
         this.insert(0, e);
     }
 
     @Override
-    public void insertLast(E e) {
+    public void append(E e) {
         this.insert(this.size, e);
     }
 
@@ -84,12 +84,12 @@ public class ArrayList<E> implements List<E>, RandomAccess {
     }
 
     @Override
-    public E removeFirst() {
+    public E deque() {
         return remove(0);
     }
 
     @Override
-    public E removeLast() {
+    public E pop() {
         return remove(this.size - 1);
     }
 
@@ -110,12 +110,12 @@ public class ArrayList<E> implements List<E>, RandomAccess {
     }
 
     @Override
-    public E getFirst() {
+    public E front() {
         return get(0);
     }
 
     @Override
-    public E getLast() {
+    public E tail() {
         return get(this.size - 1);
     }
 

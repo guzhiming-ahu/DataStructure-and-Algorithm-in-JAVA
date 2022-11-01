@@ -38,7 +38,7 @@ public class Stack<E> {
      * @param elem 入栈元素
      */
     public void push(E elem) {
-        this.stack.insertLast(elem);
+        this.stack.append(elem);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Stack<E> {
      */
     public E top() {
         if (!isEmpty()) {
-            return this.stack.getLast();
+            return this.stack.tail();
         } else {
             return null;
         }
@@ -72,7 +72,7 @@ public class Stack<E> {
      */
     public E pop() {
         if (!isEmpty()) {
-            return this.stack.removeLast();
+            return this.stack.pop();
         } else {
             return null;
         }

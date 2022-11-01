@@ -1,9 +1,7 @@
 package com.xtremeglory.data_structure.list;
 
 import com.xtremeglory.data_structure.List;
-import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
 import com.xtremeglory.data_structure.impls.iteration.list.StaticLinkedList;
-import com.xtremeglory.data_structure.impls.recursion.list.LinkedList;
 
 public class ListTest {
     public static List<Integer> list = new StaticLinkedList<>();
@@ -33,26 +31,25 @@ public class ListTest {
 
         insertTest2();
         removeTest2();
-
     }
 
     public static void insertTest() {
         for (int i = 0; i < 220; i++) {
-            list.insertLast(i);
+            list.append(i);
         }
         printTest("insertTest");
     }
 
     public static void insertTest1() {
         for (int i = 0; i < 30; i++) {
-            list.insertLast(i);
+            list.append(i);
         }
         printTest("insertTest1");
     }
 
     public static void insertTest2() {
         for (int i = 0; i < 30; i++) {
-            list.insertFirst(i);
+            list.prepend(i);
         }
         printTest("insertTest2");
     }
@@ -68,7 +65,7 @@ public class ListTest {
     public static void removeTest() {
         int len = list.size();
         for (int i = 0; i < len; ++i) {
-            list.removeLast();
+            list.pop();
         }
         assert list.size() == 0;
         assert list.isEmpty();
@@ -79,7 +76,7 @@ public class ListTest {
     public static void removeTest1() {
         int len = list.size();
         for (int i = 0; i < len; ++i) {
-            list.removeFirst();
+            list.deque();
         }
         assert list.size() == 0;
         assert list.isEmpty();

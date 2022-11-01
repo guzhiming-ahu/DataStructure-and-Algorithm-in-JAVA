@@ -23,27 +23,9 @@ public class StaticLinkedList<E> implements List<E> {
         }
     }
 
-    private static final class StaticLinkedListIterator<E> implements Iterator<E> {
-        private Node[] array;
-        private int pos;
-
-        public StaticLinkedListIterator(Node[] array) {
-            this.array = array;
-            this.pos = array[0].next;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return pos != -1;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public E next() {
-            E elem = (E) array[pos].elem;
-            pos = array[pos].next;
-            return elem;
-        }
+    @Override
+    public void prepend(E e) {
+        this.insert(0, e);
     }
 
 
@@ -104,13 +86,13 @@ public class StaticLinkedList<E> implements List<E> {
     }
 
     @Override
-    public void insertFirst(E e) {
-        this.insert(0, e);
+    public void append(E e) {
+        this.insert(this.size, e);
     }
 
     @Override
-    public void insertLast(E e) {
-        this.insert(this.size, e);
+    public E deque() {
+        return this.remove(0);
     }
 
     @Override
@@ -143,13 +125,13 @@ public class StaticLinkedList<E> implements List<E> {
     }
 
     @Override
-    public E removeFirst() {
-        return this.remove(0);
+    public E pop() {
+        return this.remove(this.size - 1);
     }
 
     @Override
-    public E removeLast() {
-        return this.remove(this.size - 1);
+    public E front() {
+        return this.get(0);
     }
 
     @Override
@@ -182,13 +164,31 @@ public class StaticLinkedList<E> implements List<E> {
     }
 
     @Override
-    public E getFirst() {
-        return this.get(0);
+    public E tail() {
+        return this.get(this.size - 1);
     }
 
-    @Override
-    public E getLast() {
-        return this.get(this.size - 1);
+    private static final class StaticLinkedListIterator<E> implements Iterator<E> {
+        private final Node[] array;
+        private int pos;
+
+        public StaticLinkedListIterator(Node[] array) {
+            this.array = array;
+            this.pos = array[0].next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return pos != -1;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public E next() {
+            E elem = (E) array[pos].elem;
+            pos = array[pos].next;
+            return elem;
+        }
     }
 
     @Override

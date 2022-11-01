@@ -17,25 +17,25 @@ public interface List<E> extends Iterable<E> {
     //存取接口
     void insert(int index, E e);
 
-    void insertFirst(E e);
+    void prepend(E e);
 
-    void insertLast(E e);
+    void append(E e);
 
     E remove(int index);
 
     void removeAll();
 
-    E removeFirst();
+    E deque();
 
-    E removeLast();
+    E pop();
 
     void set(int index, E e);
 
     E get(int index);
 
-    E getFirst();
+    E front();
 
-    E getLast();
+    E tail();
 
     //查询接口
     int indexOf(E e);

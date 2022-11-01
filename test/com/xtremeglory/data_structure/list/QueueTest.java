@@ -5,7 +5,7 @@ import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
 
 public class QueueTest {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
-        Queue<Integer> queue = new Queue<Integer>(ArrayList.class);
+        Queue<Integer> queue = new Queue<>(ArrayList.class);
         queue.enqueue(5);
         System.out.println(queue.front());
     }

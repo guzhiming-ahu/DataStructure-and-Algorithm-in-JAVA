@@ -38,7 +38,7 @@ public class Queue<E> {
      * @param elem 入队元素
      */
     public void enqueue(E elem) {
-        this.queue.insertLast(elem);
+        this.queue.append(elem);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Queue<E> {
      */
     public E front() {
         if (!isEmpty()) {
-            return this.queue.getFirst();
+            return this.queue.front();
         } else {
             return null;
         }
@@ -72,7 +72,7 @@ public class Queue<E> {
      */
     public E pop() {
         if (!isEmpty()) {
-            return this.queue.removeFirst();
+            return this.queue.deque();
         } else {
             return null;
         }
