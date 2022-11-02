@@ -2,6 +2,7 @@ package com.xtremeglory.data_structure.impls.recursion.tree;
 
 import com.xtremeglory.data_structure.Stack;
 import com.xtremeglory.data_structure.Tree;
+import com.xtremeglory.data_structure.impls.iteration.list.ArrayStack;
 
 import java.util.Iterator;
 
@@ -185,7 +186,7 @@ class BstIterator<E extends Comparable<E>> implements Iterator<E> {
     Stack<BstNode<E>> stack;
 
     public BstIterator(BstNode<E> root) {
-        this.stack = new Stack<>();
+        this.stack = new ArrayStack<>();
         while (!root.isLeaf()) {
             stack.push(root);
             root = root.left();
