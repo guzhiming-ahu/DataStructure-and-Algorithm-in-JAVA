@@ -99,7 +99,7 @@ public class StaticLinkedList<E> implements List<E> {
     @SuppressWarnings("unchecked")
     public E remove(int index) {
         if (index < 0 || index >= this.size) {
-            return null;
+            throw new ArrayIndexOutOfBoundsException();
         }
 
         int cur = 0;
@@ -201,6 +201,20 @@ public class StaticLinkedList<E> implements List<E> {
         }
 
         return cur == -1 ? -1 : index;
+    }
+
+    @Override
+    public void reverse() {
+        int current = this.array[0].next;
+        int next = this.array[current].next;
+        this.array[current].next = -1;
+        while (next != -1) {
+            int step_next = this.array[next].next;
+            this.array[next].next = current;
+            current = next;
+            next = step_next;
+        }
+        this.array[0].next = current;
     }
 
     @Override

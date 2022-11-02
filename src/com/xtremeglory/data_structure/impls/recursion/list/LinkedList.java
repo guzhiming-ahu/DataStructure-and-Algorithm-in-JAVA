@@ -77,6 +77,17 @@ final class Node<E> {
             return -1;
         }
     }
+
+    public static <E> Node<E> reverse(Node<E> node) {
+        if (node == null || node.next == null) {
+            return node;
+        } else {
+            Node<E> head = reverse(node.next);
+            node.next.next = node;
+            node.next = null;
+            return head;
+        }
+    }
 }
 
 public class LinkedList<E> implements List<E> {
@@ -197,6 +208,13 @@ public class LinkedList<E> implements List<E> {
             return this.head.indexOf(0, e);
         }
         return -1;
+    }
+
+    @Override
+    public void reverse() {
+        if (head.next != null) {
+            this.head.next = Node.reverse(head.next);
+        }
     }
 
     @Override

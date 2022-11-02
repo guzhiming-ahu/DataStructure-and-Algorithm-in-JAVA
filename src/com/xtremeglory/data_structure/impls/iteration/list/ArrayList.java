@@ -137,6 +137,15 @@ public class ArrayList<E> implements List<E>, RandomAccess {
     }
 
     @Override
+    public void reverse() {
+        for (int i = 0; i < this.array.length / 2; ++i) {
+            Object swap = this.array[i];
+            this.array[i] = this.array[this.array.length - i - 1];
+            this.array[this.array.length - i - 1] = swap;
+        }
+    }
+
+    @Override
     public boolean isEmpty() {
         return this.size == 0;
     }

@@ -39,4 +39,9 @@ public interface List<E> extends Iterable<E> {
 
     //查询接口
     int indexOf(E e);
+
+    /**
+     * 翻转线性表，
+     */
+    void reverse();
 }
