@@ -1,17 +1,11 @@
 package com.xtremeglory.data_structure;
 
-import com.xtremeglory.data_structure.impls.iteration.list.ArrayList;
 
+public abstract class Stack<E> {
+    protected final List<E> stack;
 
-public class Stack<E> {
-    private final List<E> stack;
-
-    public Stack(Class<? extends List> clazz) throws InstantiationException, IllegalAccessException {
-        this.stack = clazz.newInstance();
-    }
-
-    public Stack() {
-        this.stack = new ArrayList<>();
+    public Stack(List<E> stack) {
+        this.stack = stack;
     }
 
     /**
@@ -37,9 +31,7 @@ public class Stack<E> {
      *
      * @param elem 入栈元素
      */
-    public void push(E elem) {
-        this.stack.append(elem);
-    }
+    public abstract void push(E elem);
 
     /**
      * 入栈
@@ -57,24 +49,12 @@ public class Stack<E> {
      *
      * @return 栈顶元素
      */
-    public E top() {
-        if (!isEmpty()) {
-            return this.stack.tail();
-        } else {
-            return null;
-        }
-    }
+    public abstract E top();
 
     /**
      * 弹出栈顶元素
      *
      * @return 栈顶元素
      */
-    public E pop() {
-        if (!isEmpty()) {
-            return this.stack.pop();
-        } else {
-            return null;
-        }
-    }
+    public abstract E pop();
 }
