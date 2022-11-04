@@ -3,6 +3,7 @@ package com.xtremeglory.data_structure.impls.iteration.list;
 import com.xtremeglory.data_structure.List;
 import com.xtremeglory.data_structure.impls.recursion.list.LinkedList;
 import com.xtremeglory.problem.list.Josephus;
+import com.xtremeglory.problem.list.SuffixExpression;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,6 +128,11 @@ class ListTest {
                 list.removeAll();
             }
         }
+    }
+
+    @Test
+    void exp() {
+        System.out.println(SuffixExpression.g(SuffixExpression.f("1+(((2*3)-6)*5)*9-3*(2+6+(3*5)-6)")));
     }
 
     @Test
